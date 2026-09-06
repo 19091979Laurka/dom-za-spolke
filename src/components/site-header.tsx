@@ -18,7 +18,7 @@ export function SiteHeader({
       <div className="brand-container brand-nav-inner">
         <Link href="/" className="brand-logo" aria-label={`${FIRM.shortName} — strona główna`}>
           <Image
-            src="/brand/logo-kancelaria.png"
+            src="https://www.ksiegowoscplock.pl/images/brand/logo-szuwara-kancelaria-cream.png"
             alt={FIRM.name}
             width={1500}
             height={266}

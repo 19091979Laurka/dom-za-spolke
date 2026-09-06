@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="brand-container brand-footer-grid">
         <div className="brand-footer-brand">
           <Image
-            src="/brand/logo-kancelaria.png"
+            src="https://www.ksiegowoscplock.pl/images/brand/logo-szuwara-kancelaria-cream.png"
             alt={FIRM.name}
             width={1500}
             height={266}
