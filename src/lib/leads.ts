@@ -39,7 +39,7 @@ export function validateLeadInput(body: unknown):
   if (phoneDigits(phone).length < 9) {
     return { ok: false, error: "Podaj numer telefonu (min. 9 cyfr)." };
   }
-  if (email && !/^[^^\s@]+@[^^\s@]+\.[^^\s@]+$/.test(email)) {
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { ok: false, error: "E-mail wygląda na błędny." };
   }
   if (!LEAD_SOURCES.includes(source as LeadSource)) {
