@@ -15,7 +15,7 @@ const MAX_RESULT = 20_000;
 const hits = new Map<string, number[]>();
 
 export function phoneDigits(raw: string): string {
-  return raw.replace(/\D/g, "");
+  return raw.replace(/\u005cD/g, "");
 }
 
 export function validateLeadInput(body: unknown):
@@ -39,7 +39,7 @@ export function validateLeadInput(body: unknown):
   if (phoneDigits(phone).length < 9) {
     return { ok: false, error: "Podaj numer telefonu (min. 9 cyfr)." };
   }
-  if (email && !/[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && !/^[^^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (email && !/^[^^\u005cs@]+@[^^\u005cs@]+\u005c.[^^\u005cs@]+$/.test(email)) {
     return { ok: false, error: "E-mail wygląda na błędny." };
   }
   if (!LEAD_SOURCES.includes(source as LeadSource)) {
@@ -97,7 +97,7 @@ export async function saveLead(input: LeadInput): Promise<Lead> {
   await mkdir(path.dirname(FILE), { recursive: true });
   const existing = await readLeads();
   existing.unshift(lead);
-  await writeFile(FILE, `${JSON.stringify(existing, null, 2)}\n`, "utf8");
+  await writeFile(FILE, `${JSON.stringify(existing, null, 2)}\u005cn`, "utf8");
   return lead;
 }
 
