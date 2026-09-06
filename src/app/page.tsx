@@ -26,6 +26,11 @@ export default function HomePage() {
                   Ile dni ma fiskus? <span>→</span>
                 </Link>
               </div>
+              <ul className="brand-hero-meta">
+                <li>2 minuty</li>
+                <li>Bez konta</li>
+                <li>Semafor + zarzuty do pisma</li>
+              </ul>
             </div>
             <aside className="brand-hero-panel" aria-label="Podstawy 2025">
               <ol>
@@ -48,6 +53,23 @@ export default function HomePage() {
                 <small>{FIRM.city}</small>
               </div>
             </aside>
+          </div>
+        </section>
+
+        <section className="brand-proof" aria-label="Podstawy 2025">
+          <div className="brand-container brand-proof-grid">
+            <div>
+              <small>27.02.2025 · C-277/24</small>
+              <p>Adjak: możesz kwestionować ustalenia z decyzji spółki i żądać akt. NSA: zarzuty trzeba podnieść już przed organem.</p>
+            </div>
+            <div>
+              <small>30.04.2025 · C-278/24</small>
+              <p>Genzyński: winę da się obalić starannością. Sam VAT to nie upadłość. Polskie sądy wciąż bywają surowe.</p>
+            </div>
+            <div>
+              <small>29.08.2025 · DTS2.8012.5.2025</small>
+              <p>MF: organ nie przekleja sentencji spółki na Ciebie. VAT = twardy Adjak. CIT, PIT-4 i ZUS = analogia.</p>
+            </div>
           </div>
         </section>
 
@@ -95,6 +117,58 @@ export default function HomePage() {
               </p>
               <Link href="/licznik">Uruchom licznik →</Link>
             </article>
+          </div>
+        </section>
+
+        <section className="brand-section" style={{ paddingTop: 0 }} aria-labelledby="faq-heading">
+          <div className="brand-container">
+            <p className="brand-eyebrow-plain">Najczęściej pytacie</p>
+            <h2 id="faq-heading">Najpierw porządkujemy pytania. Potem semafor.</h2>
+            <div className="brand-faq">
+              <details open>
+                <summary>Czy fiskus naprawdę może iść po mój dom?</summary>
+                <p>
+                  Art. 116 O.p. to decyzja na cały majątek członka zarządu — dom, lokata, udział w
+                  mieszkaniu — gdy egzekucja ze spółki padła. To nie kara za spółkę. To osobista
+                  odpowiedzialność. Diagnostyk mówi, czy urząd w ogóle ma z czego strzelać.
+                </p>
+              </details>
+              <details>
+                <summary>Wyroki TSUE z 2025 r. zamykają sprawę?</summary>
+                <p>
+                  Nie. Adjak (C-277/24) daje prawo kwestionować ustalenia z decyzji spółki i żądać
+                  akt. Genzyński (C-278/24) pozwala obalać winę starannością. Interpretacja MF z 29
+                  sierpnia 2025 r. zakazuje automatycznego przenoszenia sentencji. Ale NSA w III FSK
+                  605/24 mówi wprost: zarzuty trzeba podnieść już w postępowaniu przed organem. Jak
+                  milczysz — później Adjak Cię nie uratuje.
+                </p>
+              </details>
+              <details>
+                <summary>Dla kogo jest ten diagnostyk?</summary>
+                <p>
+                  Dla członka albo byłego członka zarządu spółki z o.o., S.A. albo prostej spółki
+                  akcyjnej, gdy na stole jest zaległość spółki albo już pismo z art. 116. JDG,
+                  cywilna, jawna i komandytowa — art. 116 raczej nie. Tam idziesz do Licznika
+                  Fiskusa.
+                </p>
+              </details>
+              <details>
+                <summary>VAT, CIT i ZUS liczycie tak samo?</summary>
+                <p>
+                  Nie. TSUE orzekał na VAT — tam Adjak jest twardy. Przy CIT i PIT-4 idziemy analogią
+                  z interpretacji MF. Przy ZUS ścieżka to art. 31 u.s.u.s.; semafor jest ostrożniejszy.
+                  VAT za styczeń–listopad 2021 przedawnia się 31 grudnia 2026.
+                </p>
+              </details>
+              <details>
+                <summary>Co się dzieje z numerem telefonu?</summary>
+                <p>
+                  Numer idzie do kancelarii Rafała Szuwary, nie do newslettera i nie do biura
+                  rachunkowego Laury. Oddzwonimy i powiemy, czy pisać pismo, czy brać akt, czy czekać.
+                  To nie jest porada prawna z kreatora — dopiero rozmowa otwiera sprawę.
+                </p>
+              </details>
+            </div>
           </div>
         </section>
 
