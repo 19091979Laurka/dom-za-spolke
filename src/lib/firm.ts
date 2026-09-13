@@ -4,9 +4,17 @@ export const FIRM = {
   name: "Kancelaria Prawno-Podatkowa Rafał Szuwara",
   shortName: "Kancelaria Szuwara",
   lawyer: "Rafał Szuwara",
-  email: "kancelaria.szuwara@gmail.com",
+  // Public contact matches the main site (kancelaria-szuwara.pl), which this is
+  // a subpage of. If leads should land in a different inbox, change it here.
+  email: "kancelaria@szuwara.pl",
   phone: process.env.NEXT_PUBLIC_FIRM_PHONE?.trim() || "500 013 269",
   city: "Płock · Warszawa",
+  // Authoritative office data taken from the main site's structured data.
+  // Bielsk is Laura's accounting office (ksiegowoscplock.pl), not this firm.
+  offices: [
+    { street: "ul. Otolińska 18F", zip: "09-410", locality: "Płock" },
+    { street: "Al. KEN 48 lok. 4", zip: "02-797", locality: "Warszawa" },
+  ],
   site: "https://kancelaria-szuwara.pl",
   accountingSite: "https://www.ksiegowoscplock.pl",
 } as const;

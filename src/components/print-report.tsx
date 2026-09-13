@@ -33,7 +33,7 @@ export function PrintReport(p: Props) {
     <section className="pdf-sheet"><Letterhead label="Dane i podstawa analizy" /><h3 className="pdf-section-title"><span>{p.groups.length ? "03" : "02"}</span> Dane i źródła</h3>
       <h4>Dane przyjęte do raportu</h4><dl className="pdf-inputs">{p.answers.map((a,i)=><div key={i}><dt>{a.label}</dt><dd>{a.value}</dd></div>)}</dl>
       <section className="pdf-sources"><h4>Podstawy prawne i orzecznictwo</h4>{p.sources.map((s,i)=><div key={i}><span>{String(i+1).padStart(2,"0")}</span><p><a href={s.url}>{s.cite}</a><br />{s.note}</p></div>)}</section>
-      <aside className="pdf-contact"><p>Porozmawiajmy o dokumentach.</p><span>{FIRM.name}<br />{FIRM.phone} · {FIRM.email}<br />kancelaria-szuwara.pl</span></aside>
+      <aside className="pdf-contact"><p>Porozmawiajmy o dokumentach.</p><span>{FIRM.name}<br />{FIRM.offices.map(o => `${o.locality}, ${o.street}, ${o.zip}`).join(" · ")}<br />{FIRM.phone} · {FIRM.email}<br />kancelaria-szuwara.pl</span></aside>
       <p className="pdf-fine">Raport wygenerowany automatycznie z odpowiedzi użytkownika. Nie stanowi podpisanej opinii kancelarii. Reguły diagnostyczne: 12.09.2026. Źródła w wersji elektronicznej są klikalne.</p>
     </section>
   </article>;

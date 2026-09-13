@@ -95,6 +95,13 @@ const legalServiceLd = {
   image: absoluteUrl("/brand/gabinet.webp"),
   telephone: firmTelHref().replace("tel:", ""),
   email: FIRM.email,
+  address: FIRM.offices.map((o) => ({
+    "@type": "PostalAddress",
+    streetAddress: o.street,
+    postalCode: o.zip,
+    addressLocality: o.locality,
+    addressCountry: "PL",
+  })),
   areaServed: ["Płock", "Warszawa", "województwo mazowieckie", "Polska"],
   knowsAbout: [
     "art. 116 Ordynacji podatkowej",
