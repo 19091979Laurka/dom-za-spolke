@@ -18,8 +18,8 @@ export default function DiagnostykPage() {
           <p className="brand-eyebrow">Diagnostyk · art. 116 O.p.</p>
           <h1>Dom za spółkę</h1>
           <p className="brand-page-lead">
-            Dwanaście pytań. Żadnego logowania. Na końcu semafor, zarzuty i pole na telefon — żeby
-            kancelaria mogła wziąć akt, zanim minie termin.
+            Sześć kroków do uporządkowania sytuacji. Na końcu otrzymasz wynik,
+            listę dokumentów i kierunki obrony. Raport możesz pobrać bez zostawiania telefonu.
           </p>
           <div className="mt-6">
             <Disclaimer compact />

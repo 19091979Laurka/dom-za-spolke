@@ -17,8 +17,8 @@ export default function LicznikPage() {
           <p className="brand-eyebrow">Art. 70 O.p. · 31.12.2026</p>
           <h1>Licznik Fiskusa</h1>
           <p className="brand-page-lead">
-            Pięć lat od końca roku, w którym upłynął termin płatności. VAT I–XI 2021 spada 31 grudnia
-            2026. Jeśli urząd wszczął KKS w grudniu — to zarzut instrumentalności, nie magia.
+            Sprawdź bazowy termin i zdarzenia, które wymagają analizy. Dla VAT I–XI 2021
+            punktem wyjścia jest 31 grudnia 2026. Wynik nie potwierdza przedawnienia.
           </p>
           <div className="mt-6">
             <Disclaimer compact />

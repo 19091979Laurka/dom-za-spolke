@@ -1,7 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { LeadCta } from "@/components/lead-cta";
 import { SiteHeader } from "@/components/site-header";
-import { FIRM } from "@/lib/firm";
 
 export default function HomePage() {
   return (
@@ -12,11 +12,11 @@ export default function HomePage() {
           <div className="brand-container brand-hero-layout">
             <div>
               <p className="brand-eyebrow">KANCELARIA · ART. 116 · TSUE 2025</p>
-              <h1>Czy fiskus może zająć Twój dom za długi spółki?</h1>
+              <h1>Czy fiskus może zająć <span className="hero-emphasis">Twój dom</span> za długi spółki?</h1>
               <p className="brand-hero-copy">
-                Rok temu urząd przeklejał decyzję spółki na członka zarządu i szedł po mieszkanie.
-                Wyroki Adjak i Genzyński oraz interpretacja MF z 29 sierpnia 2025 r. to zatrzymały.
-                Sprawdź w dwie minuty — zanim podpiszesz ugodę albo złożysz wyjaśnienia.
+                Spółka ma zaległości. Ty masz prawo do obrony. Sprawdź, które przesłanki
+                odpowiedzialności wymagają uwagi i jakie dokumenty przygotować.
+                Kilka minut, sześć kroków i czytelny raport.
               </p>
               <div className="brand-hero-actions">
                 <Link href="/diagnostyk" className="brand-button brand-button-cta">
@@ -27,31 +27,18 @@ export default function HomePage() {
                 </Link>
               </div>
               <ul className="brand-hero-meta">
-                <li>2 minuty</li>
+                <li>6 kroków</li>
                 <li>Bez konta</li>
-                <li>Semafor + zarzuty do pisma</li>
+                <li>Wynik + plan działania</li>
               </ul>
             </div>
-            <aside className="brand-hero-panel" aria-label="Podstawy 2025">
-              <ol>
-                <li>
-                  <small>C-277/24 Adjak</small>
-                  <p>Masz prawo kwestionować ustalenia z decyzji wobec spółki i żądać akt.</p>
-                </li>
-                <li>
-                  <small>C-278/24 Genzyński</small>
-                  <p>Winę się domniemywa, ale da się ją obalić. Sam VAT to nie upadłość.</p>
-                </li>
-                <li>
-                  <small>MF 29.08.2025</small>
-                  <p>Organ nie może automatycznie przenieść sentencji spółki na Ciebie.</p>
-                </li>
-              </ol>
-              <div className="brand-hero-badge">
-                <strong>{FIRM.lawyer}</strong>
-                <span>{FIRM.phone}</span>
-                <small>{FIRM.city}</small>
+            <aside className="hero-visual" aria-label="Kancelaria Szuwara — prawo i podatki">
+              <div className="hero-photo"><Image src="/brand/gabinet.png" alt="Gabinet Kancelarii Szuwara z logo na ścianie" fill priority sizes="(min-width: 960px) 50vw, 100vw" />
+                <div className="hero-photo-label"><span>01 / PRAWO DO OBRONY</span><span>ART. 116 O.P.</span></div>
+                <div className="hero-orbit" aria-hidden="true" />
               </div>
+              <div className="hero-note"><div className="hero-note-mark" aria-hidden="true">§</div><div><small>ODPOWIEDZIALNOŚĆ NIE JEST AUTOMATYCZNA</small><p>Najpierw przesłanki.<br /><strong>Potem decyzja.</strong></p></div><span className="hero-note-arrow" aria-hidden="true">↗</span></div>
+              <p className="hero-caption">Kancelaria Szuwara <span>Prawo i podatki pod jednym dachem</span></p>
             </aside>
           </div>
         </section>
@@ -59,16 +46,16 @@ export default function HomePage() {
         <section className="brand-proof" aria-label="Podstawy 2025">
           <div className="brand-container brand-proof-grid">
             <div>
-              <small>27.02.2025 · C-277/24</small>
-              <p>Adjak: możesz kwestionować ustalenia z decyzji spółki i żądać akt. NSA: zarzuty trzeba podnieść już przed organem.</p>
+              <a href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:62024CJ0277" target="_blank" rel="noreferrer"><small>27.02.2025 · C-277/24 ↗</small></a>
+              <p>Adjak: możliwość kwestionowania ustaleń i kwalifikacji prawnych oraz dostęp do akt w sprawie odpowiedzialności za VAT.</p>
             </div>
             <div>
-              <small>30.04.2025 · C-278/24</small>
-              <p>Genzyński: winę da się obalić starannością. Sam VAT to nie upadłość. Polskie sądy wciąż bywają surowe.</p>
+              <a href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:62024CJ0278" target="_blank" rel="noreferrer"><small>30.04.2025 · C-278/24 ↗</small></a>
+              <p>Genzyński: możliwość wykazania braku winy. Samo powstanie zobowiązania VAT nie wyznacza momentu niewypłacalności.</p>
             </div>
             <div>
-              <small>29.08.2025 · DTS2.8012.5.2025</small>
-              <p>MF: organ nie przekleja sentencji spółki na Ciebie. VAT = twardy Adjak. CIT, PIT-4 i ZUS = analogia.</p>
+              <a href="https://www.gov.pl/web/finanse/interpretacja-ogolna-nr-dts2801252025-ministra-finansow-i-gospodarki" target="_blank" rel="noreferrer"><small>29.08.2025 · INTERPRETACJA MF ↗</small></a>
+              <p>MF: wykładnia art. 116 po wyrokach TSUE. ZUS wymaga odrębnej oceny na podstawie ustawy ubezpieczeniowej.</p>
             </div>
           </div>
         </section>
@@ -76,22 +63,22 @@ export default function HomePage() {
         <section className="brand-section">
           <div className="brand-container">
             <p className="brand-eyebrow-plain">Jak to działa</p>
-            <h2>Trzy rzeczy, zanim urząd wejdzie do domu.</h2>
+            <h2>Poznaj swoją sytuację.<br />Zaplanuj kolejny krok.</h2>
             <div className="brand-pillars">
               <article className="brand-pillar">
                 <span>01</span>
                 <h3>Odpowiadasz</h3>
-                <p>Kadencja, zaległość, egzekucja, upadłość, wgląd do akt. Dwanaście pytań, bez konta.</p>
+                <p>Kadencja, zaległość, egzekucja, upadłość, wgląd do akt. Sześć etapów, bez konta.</p>
               </article>
               <article className="brand-pillar">
                 <span>02</span>
                 <h3>Dostajesz semafor</h3>
-                <p>Czerwony, żółty albo zielony plus zarzuty. VAT = twardy Adjak. CIT i ZUS = analogia.</p>
+                <p>Wynik wynika z konkretnych odpowiedzi. Dostajesz listę niewiadomych, kierunki obrony i podstawy prawne.</p>
               </article>
               <article className="brand-pillar">
                 <span>03</span>
-                <h3>Kancelaria dzwoni</h3>
-                <p>Zostawiasz numer. Przeglądamy wynik i mówimy, czy pisać pismo, czy czekać.</p>
+                <h3>Rozmawiasz z kancelarią</h3>
+                <p>Możesz przekazać wynik kancelarii i ustalić dalsze działania. Sam formularz nie zastępuje zlecenia prowadzenia sprawy.</p>
               </article>
             </div>
           </div>
@@ -103,8 +90,8 @@ export default function HomePage() {
               <small>Flaga</small>
               <h2>Dom za spółkę</h2>
               <p>
-                Art. 116 to decyzja na cały majątek: dom, lokata, udział w mieszkaniu. Narzędzie nie
-                liczy „ile zapłacisz”. Mówi, czy urząd w ogóle ma z czego strzelać.
+                Odpowiedzialność może objąć majątek osobisty. Sprawdź okres funkcji, egzekucję
+                i możliwe podstawy obrony. Wynik nie przesądza zajęcia konkretnej nieruchomości.
               </p>
               <Link href="/diagnostyk">Wejdź do diagnostyka →</Link>
             </article>
@@ -112,8 +99,8 @@ export default function HomePage() {
               <small>Kalendarz</small>
               <h2>Licznik Fiskusa</h2>
               <p>
-                VAT za styczeń–listopad 2021 przedawnia się 31 grudnia 2026. Urzędy wszczynają KKS,
-                żeby zatrzymać zegar. NSA: instrumentalne KKS nie zawiesza.
+                Dla VAT za styczeń–listopad 2021 bazowy termin to 31 grudnia 2026.
+                Sprawdź, co może zmienić ten rachunek: egzekucja, ulgi, upadłość, skarga czy KKS.
               </p>
               <Link href="/licznik">Uruchom licznik →</Link>
             </article>
@@ -130,17 +117,13 @@ export default function HomePage() {
                 <p>
                   Art. 116 O.p. to decyzja na cały majątek członka zarządu — dom, lokata, udział w
                   mieszkaniu — gdy egzekucja ze spółki padła. To nie kara za spółkę. To osobista
-                  odpowiedzialność. Diagnostyk mówi, czy urząd w ogóle ma z czego strzelać.
+                  odpowiedzialność. Diagnostyk porządkuje przesłanki i dokumenty potrzebne do indywidualnej oceny.
                 </p>
               </details>
               <details>
                 <summary>Wyroki TSUE z 2025 r. zamykają sprawę?</summary>
                 <p>
-                  Nie. Adjak (C-277/24) daje prawo kwestionować ustalenia z decyzji spółki i żądać
-                  akt. Genzyński (C-278/24) pozwala obalać winę starannością. Interpretacja MF z 29
-                  sierpnia 2025 r. zakazuje automatycznego przenoszenia sentencji. Ale NSA w III FSK
-                  605/24 mówi wprost: zarzuty trzeba podnieść już w postępowaniu przed organem. Jak
-                  milczysz — później Adjak Cię nie uratuje.
+                  Nie. Wyroki potwierdzają gwarancje obrony, ale nie uchylają odpowiedzialności członków zarządu. Należy sprawdzić przesłanki, sformułować konkretne zarzuty i dotrzymać terminów. Brak dostępu do akt sam w sobie nie oznacza wygranej.
                 </p>
               </details>
               <details>
@@ -155,17 +138,13 @@ export default function HomePage() {
               <details>
                 <summary>VAT, CIT i ZUS liczycie tak samo?</summary>
                 <p>
-                  Nie. TSUE orzekał na VAT — tam Adjak jest twardy. Przy CIT i PIT-4 idziemy analogią
-                  z interpretacji MF. Przy ZUS ścieżka to art. 31 u.s.u.s.; semafor jest ostrożniejszy.
-                  VAT za styczeń–listopad 2021 przedawnia się 31 grudnia 2026.
+                  Nie. Wyroki TSUE dotyczą VAT. Przy CIT i należnościach płatnika trzeba ocenić przepisy krajowe i interpretację MF. Składki ZUS wymagają odrębnej analizy. Licznik wyznacza tylko bazowy termin podatkowy.
                 </p>
               </details>
               <details>
                 <summary>Co się dzieje z numerem telefonu?</summary>
                 <p>
-                  Numer idzie do kancelarii Rafała Szuwary, nie do newslettera i nie do biura
-                  rachunkowego Laury. Oddzwonimy i powiemy, czy pisać pismo, czy brać akt, czy czekać.
-                  To nie jest porada prawna z kreatora — dopiero rozmowa otwiera sprawę.
+                  Dane i odpowiedzi pozostają w tej karcie przeglądarki. Formularz przygotowuje wiadomość w Twoim programie pocztowym — dopiero Ty ją wysyłasz do kancelarii. Sam wynik możesz pobrać bez podawania danych kontaktowych.
                 </p>
               </details>
             </div>
@@ -175,10 +154,10 @@ export default function HomePage() {
         <section id="kontakt" className="brand-contact">
           <div className="brand-container brand-contact-inner">
             <p className="brand-eyebrow">Kontakt</p>
-            <h2>Nie masz czasu na kreator? Zostaw numer.</h2>
+            <h2>Masz już pismo z urzędu? Porozmawiajmy.</h2>
             <p className="brand-contact-copy">
-              Napisz w dwóch zdaniach, co przyszło z urzędu. Oddzwonimy i powiemy, czy odpalać
-              diagnostyk, czy od razu brać akt.
+              Opisz krótko swoją sytuację i przygotuj e-mail do kancelarii.
+              W pilnej sprawie zadzwoń — terminy biegną niezależnie od formularza.
             </p>
             <LeadCta
               source="landing"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,10 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { ChoiceCard } from "@/components/choice-card";
 import { Disclaimer } from "@/components/disclaimer";
+import { ReportActions } from "@/components/report-actions";
 import { LeadCta } from "@/components/lead-cta";
+import { PrintReport } from "@/components/print-report";
 import { LegalList, Semafor } from "@/components/result-panel";
 import {
   diagnoseArt116,
+  validateArt116Step,
   emptyArt116Answers,
   resultPlainText,
   type Art116Answers,
@@ -32,6 +35,13 @@ export function Art116Wizard() {
   const [answers, setAnswers] = useState<Art116Answers>(emptyArt116Answers);
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
+  const region = useRef<HTMLDivElement>(null);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) { firstRender.current = false; return; }
+    region.current?.focus({ preventScroll: true });
+    region.current?.scrollIntoView({ block: "start", behavior: "instant" });
+  }, [step, done]);
 
   const result = useMemo(
     () => (done ? diagnoseArt116(answers) : null),
@@ -43,48 +53,9 @@ export function Art116Wizard() {
     setError("");
   }
 
-  function validate(current: number): string {
-    if (current === 0 && !answers.companyForm) return "Wskaż formę, w której zasiadałeś.";
-    if (current === 1) {
-      if (answers.companyForm === "other") return "";
-      if (!answers.tenureStart) return "Podaj początek kadencji.";
-      if (!answers.stillServing && !answers.tenureEnd) {
-        return "Podaj koniec kadencji albo zaznacz, że nadal siedzisz w zarządzie.";
-      }
-      if (
-        answers.tenureStart &&
-        answers.tenureEnd &&
-        !answers.stillServing &&
-        answers.tenureEnd < answers.tenureStart
-      ) {
-        return "Koniec kadencji nie może być wcześniejszy niż początek.";
-      }
-      if (!answers.resignationBeforeKrs) {
-        return "Powiedz, czy rezygnacja była wcześniej niż wykreślenie z KRS.";
-      }
-    }
-    if (current === 2) {
-      if (!answers.arrearKind) return "Wskaż rodzaj zaległości.";
-      if (!answers.paymentDue) return "Podaj termin płatności tej zaległości.";
-    }
-    if (current === 3) {
-      if (!answers.enforcementFruitless) return "Czy egzekucja ze spółki padła?";
-      if (!answers.proceeding116) return "Czy toczy się już postępowanie z art. 116?";
-    }
-    if (current === 4) {
-      if (!answers.insolvencyFiled) return "Czy złożono wniosek o upadłość albo otwarto restrukturyzację?";
-      if (!answers.companyAssetsPointed) return "Czy wskazałeś mienie spółki do egzekucji?";
-    }
-    if (current === 5) {
-      if (!answers.hadCompanyDecision) return "Czy znasz decyzję wobec spółki?";
-      if (!answers.hadFileAccess) return "Czy miałeś wgląd do akt spółki?";
-      if (!answers.kksNearLimitation) return "Czy KKS wszczęto tuż przed przedawnieniem?";
-    }
-    return "";
-  }
 
   function next() {
-    const message = validate(step);
+    const message = validateArt116Step(answers, step);
     if (message) {
       setError(message);
       return;
@@ -118,15 +89,21 @@ export function Art116Wizard() {
 
   if (done && result) {
     return (
-      <div id="wynik-do-druku" className="space-y-6">
+      <div ref={region} tabIndex={-1} id="wynik-do-druku" className="report-page space-y-6" aria-label="Raport diagnostyczny">
+        <PrintReport kind="ODPOWIEDZIALNOŚĆ ZARZĄDU" date={result.assessmentDate} title={result.title} summary={result.summary} signal={result.signal}
+          steps={result.nextSteps} sources={result.legalBasis} answers={result.answerSummary}
+          note={result.zusPath ? "ZUS wymaga odrębnej oceny. Nie stosujemy automatycznie zegara podatkowego ani wyroków dotyczących VAT." : result.adjakStrength === "analogy" ? "Wyroki TSUE dotyczą VAT. Przy CIT i należnościach płatnika argumentację należy odnieść do krajowych przepisów i konkretnej sprawy." : undefined}
+          groups={result.signal === "out" ? [] : [{title:"Przesłanki odpowiedzialności",items:result.premises.map(x=>({title:x.label,body:x.detail,meta:statusLabel(x.status)}))},{title:"Kierunki obrony do sprawdzenia",items:result.defenses.map(x=>({title:x.title,body:x.body,meta:x.strength === "strong" ? "potwierdź dokumentami" : x.strength === "medium" ? "do weryfikacji" : "kontekst"}))}]} />
+        <div className="report-heading"><p className="brand-eyebrow-plain">Kancelaria Szuwara · Raport diagnostyczny</p><p>Data: {result.assessmentDate} · reguły 12.09.2026</p></div>
         <Semafor signal={result.signal} title={result.title} summary={result.summary} />
+        <ReportActions text={resultPlainText(result)} />
         {result.zusPath ? (
           <p className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-            ZUS: ścieżka z art. 31 u.s.u.s. Semafor jest ostrożniejszy. Adjak nie cytuje się tu jak przy VAT.
+            ZUS wymaga odrębnej oceny. Nie stosujemy tu automatycznie zegara podatkowego ani wyroków dotyczących VAT.
           </p>
         ) : result.adjakStrength === "analogy" ? (
           <p className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-            TSUE orzekał na VAT. Przy tej zaległości wynik opiera się na analogii z interpretacji MF z 29.08.2025 r., nie na twardej sentencji Adjak.
+            Wyroki TSUE dotyczą VAT. Przy CIT i należnościach płatnika znaczenie mają krajowe przepisy oraz interpretacja ogólna MF; zakres argumentacji trzeba odnieść do danej sprawy.
           </p>
         ) : null}
 
@@ -141,11 +118,11 @@ export function Art116Wizard() {
               }))}
             />
             <LegalList
-              heading="Zarzuty do pisma — nie gotowa opinia"
+              heading="Kierunki obrony do sprawdzenia"
               items={result.defenses.map((d) => ({
                 title: d.title,
                 body: d.body,
-                meta: d.strength === "strong" ? "silny" : d.strength === "medium" ? "do akt" : "cytat",
+                meta: d.strength === "strong" ? "potwierdź dokumentami" : d.strength === "medium" ? "do weryfikacji" : "kontekst",
               }))}
             />
             <LegalList
@@ -160,7 +137,7 @@ export function Art116Wizard() {
               <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                 {result.legalBasis.map((item) => (
                   <li key={item.cite}>
-                    <span className="font-semibold text-foreground">{item.cite}</span>
+                    <a className="font-semibold text-foreground underline underline-offset-4" href={item.url} target="_blank" rel="noreferrer">{item.cite} ↗</a>
                     {" — "}
                     {item.note}
                   </li>
@@ -178,6 +155,7 @@ export function Art116Wizard() {
           </p>
         )}
 
+        <details className="report-answers" open><summary>Twoje odpowiedzi — sprawdź dane wejściowe</summary><dl>{result.answerSummary.map(item => <div key={item.label}><dt>{item.label}</dt><dd>{item.value}</dd></div>)}</dl></details>
         <Disclaimer />
         <LeadCta
           source="diagnostyk"
@@ -197,7 +175,7 @@ export function Art116Wizard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div ref={region} tabIndex={-1} className="wizard-shell space-y-6" aria-label={`Krok ${step + 1}: ${STEPS[step]}`}>
       <div>
         <div className="mb-2 flex items-center justify-between text-xs font-semibold tracking-wide text-primary uppercase">
           <span>
@@ -205,11 +183,12 @@ export function Art116Wizard() {
           </span>
           <span>{STEPS[step]}</span>
         </div>
-        <Progress value={((step + 1) / STEPS.length) * 100} />
+        <Progress aria-label="Postęp formularza" value={((step + 1) / STEPS.length) * 100} />
+        <ol className="wizard-steps" aria-label="Etapy">{STEPS.map((label, i) => <li key={label} data-active={i === step} data-complete={i < step}><span>{i < step ? "✓" : String(i + 1).padStart(2, "0")}</span>{label}</li>)}</ol>
       </div>
 
       {step === 0 ? (
-        <Step title="W jakiej spółce siedziałeś w zarządzie?">
+        <Step title="W jakiej spółce pełnisz lub pełniłeś funkcję?">
           <ChoiceCard
             selected={answers.companyForm === "spzoo"}
             title="Spółka z o.o."
@@ -253,7 +232,7 @@ export function Art116Wizard() {
           <ChoiceCard
             selected={answers.stillServing}
             title="Nadal jestem w zarządzie"
-            onClick={() => patch({ stillServing: true, tenureEnd: "" })}
+            onClick={() => patch({ stillServing: true, tenureEnd: "", resignationBeforeKrs: "" })}
           />
           <ChoiceCard
             selected={!answers.stillServing}
@@ -271,11 +250,11 @@ export function Art116Wizard() {
               />
             </Field>
           ) : null}
-          <YesNo
+          {!answers.stillServing ? <YesNo
             label="Czy złożyłeś rezygnację albo zostałeś odwołany wcześniej, niż wykreślono Cię z KRS?"
             value={answers.resignationBeforeKrs}
             onChange={(value) => patch({ resignationBeforeKrs: value })}
-          />
+          /> : null}
         </Step>
       ) : null}
 
@@ -284,7 +263,7 @@ export function Art116Wizard() {
           <ChoiceCard
             selected={answers.arrearKind === "vat"}
             title="VAT"
-            hint="Tu Adjak i Genzyński działają wprost."
+            hint="Wyroki TSUE dotyczą właśnie zaległości VAT."
             onClick={() => patch({ arrearKind: "vat" })}
           />
           <ChoiceCard
@@ -301,9 +280,10 @@ export function Art116Wizard() {
           <ChoiceCard
             selected={answers.arrearKind === "zus"}
             title="Składki ZUS"
-            hint="Osobna ustawa. Semafor będzie ostrożniejszy."
+            hint="Osobna ustawa. Wymaga odrębnej oceny składkowej."
             onClick={() => patch({ arrearKind: "zus" })}
           />
+          <YesNo label="Czy sprawa dotyczy zwrotu / nadpłaty do oddania, zaległości po likwidacji spółki lub funkcji innej niż członek zarządu (np. likwidator, dyrektor PSA)?" value={answers.specialCase} onChange={(value) => patch({ specialCase: value })} />
           <Field label="Termin płatności tej zaległości" htmlFor="payment-due">
             <Input
               id="payment-due"
@@ -324,22 +304,23 @@ export function Art116Wizard() {
             onChange={(value) => patch({ enforcementFruitless: value })}
           />
           <YesNo
-            label="Czy dostałeś wezwanie albo decyzję o odpowiedzialności z art. 116?"
+            label="Czy wszczęto postępowanie dotyczące Twojej osobistej odpowiedzialności?"
             value={answers.proceeding116}
             onChange={(value) => patch({ proceeding116: value })}
           />
+          <YesNo label="Czy wydano już decyzję o Twojej odpowiedzialności?" value={answers.decisionIssued} onChange={(value) => patch({ decisionIssued: value })} />
         </Step>
       ) : null}
 
       {step === 4 ? (
         <Step title="Furtki ustawowe: upadłość i mienie">
           <YesNo
-            label="Czy we właściwym czasie złożono wniosek o upadłość albo otwarto restrukturyzację?"
+            label="Czy we właściwym czasie zgłoszono upadłość, otwarto restrukturyzację lub zatwierdzono układ w postępowaniu o zatwierdzenie układu?"
             value={answers.insolvencyFiled}
-            onChange={(value) => patch({ insolvencyFiled: value })}
+            onChange={(value) => patch({ insolvencyFiled: value, insolvencyDate: value === "yes" ? answers.insolvencyDate : "" })}
           />
           {answers.insolvencyFiled === "yes" ? (
-            <Field label="Data wniosku (jeśli pamiętasz)" htmlFor="insolvency-date">
+            <Field label="Data właściwego zdarzenia (jeśli pamiętasz)" htmlFor="insolvency-date">
               <Input
                 id="insolvency-date"
                 className="h-11"
@@ -349,6 +330,8 @@ export function Art116Wizard() {
               />
             </Field>
           ) : null}
+          <p className="text-sm text-muted-foreground">Sam wniosek restrukturyzacyjny nie wystarcza. Wybierz „Nie wiem”, jeśli terminowość nie została sprawdzona.</p>
+          <YesNo label="Czy masz dowody, że niezgłoszenie upadłości nastąpiło bez Twojej winy?" value={answers.noFault} onChange={(value) => patch({ noFault: value })} />
           <YesNo
             label="Czy wskazałeś konkretne mienie spółki, z którego da się ściągnąć zaległość w znacznej części?"
             value={answers.companyAssetsPointed}
@@ -369,16 +352,16 @@ export function Art116Wizard() {
             value={answers.hadFileAccess}
             onChange={(value) => patch({ hadFileAccess: value })}
           />
-          <YesNo
+          {answers.arrearKind !== "zus" ? <YesNo
             label="Czy postępowanie karnoskarbowe wszczęto tuż przed końcem przedawnienia spółki?"
             value={answers.kksNearLimitation}
             onChange={(value) => patch({ kksNearLimitation: value })}
-          />
+          /> : null}
         </Step>
       ) : null}
 
       {error ? (
-        <p className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900">
+        <p role="alert" className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900">
           {error}
         </p>
       ) : null}
@@ -402,7 +385,7 @@ export function Art116Wizard() {
 
 function Step({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-3">
+    <div className="wizard-step space-y-3">
       <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
       <div className="grid gap-2">{children}</div>
     </div>
@@ -436,8 +419,8 @@ function YesNo({
   onChange: (value: YesNoUnknown) => void;
 }) {
   return (
-    <div className="space-y-2 pt-2">
-      <p className="text-sm font-semibold">{label}</p>
+    <fieldset className="space-y-2 pt-2">
+      <legend className="text-sm font-semibold">{label}</legend>
       <div className="grid gap-2 sm:grid-cols-3">
         <ChoiceCard selected={value === "yes"} title="Tak" onClick={() => onChange("yes")} />
         <ChoiceCard selected={value === "no"} title="Nie" onClick={() => onChange("no")} />
@@ -447,7 +430,7 @@ function YesNo({
           onClick={() => onChange("unknown")}
         />
       </div>
-    </div>
+    </fieldset>
   );
 }
 

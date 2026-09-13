@@ -34,7 +34,7 @@ export function Semafor({
   }[signal];
 
   return (
-    <section className={cn("border p-5 sm:p-7", tone.box)}>
+    <section data-signal={signal} className={cn("report-signal border p-5 sm:p-7", tone.box)}>
       <div className="flex items-center gap-2">
         <span className={cn("size-3 rounded-full", tone.lamp)} aria-hidden />
         <Badge variant="secondary">{tone.label}</Badge>

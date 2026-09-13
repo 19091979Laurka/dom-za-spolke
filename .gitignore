@@ -45,3 +45,7 @@ next-env.d.ts
 
 # incoming leads (PII)
 /data/leads.json
+
+/.superdesign/
+/test-results/
+/playwright-report/

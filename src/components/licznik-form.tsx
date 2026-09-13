@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChoiceCard } from "@/components/choice-card";
 import { Disclaimer } from "@/components/disclaimer";
+import { ReportActions } from "@/components/report-actions";
 import { LeadCta } from "@/components/lead-cta";
+import { PrintReport } from "@/components/print-report";
 import { LegalList, Semafor } from "@/components/result-panel";
 import { formatPl } from "@/lib/dates";
 import {
@@ -62,7 +64,7 @@ export function LicznikForm() {
   const result = resultState && !("error" in resultState) ? resultState : null;
 
   return (
-    <div className="space-y-6">
+    <div className="timer-shell space-y-6">
       {empty && !result ? (
         <div className="rounded-xl border border-dashed border-border bg-card px-5 py-8 text-center">
           <p className="text-2xl font-bold">Wybierz podatek</p>
@@ -90,7 +92,7 @@ export function LicznikForm() {
           <ChoiceCard
             selected={input.taxKind === "pit"}
             title="PIT roczny"
-            hint="PIT za 2020, płatny w 2021, pada 31.12.2026."
+            hint="Standardowy PIT roczny; terminy szczególne potwierdź w dokumentach."
             onClick={() => patch({ taxKind: "pit" as TaxKind })}
           />
           <ChoiceCard
@@ -151,7 +153,7 @@ export function LicznikForm() {
               </select>
             </Field>
           ) : null}
-          <Field label="Termin płatności" htmlFor="due">
+          <Field label={input.taxKind === "cit" ? "Rzeczywisty termin CIT (wpisz)" : "Termin płatności (sprawdź)"} htmlFor="due">
             <Input
               id="due"
               className="h-11"
@@ -163,9 +165,12 @@ export function LicznikForm() {
         </div>
       ) : null}
 
+      {input.taxKind ? <p className="text-sm text-muted-foreground">{input.taxKind === "cit" ? "CIT nie ma jednego terminu dla każdego roku i podatnika. Standardowo to koniec trzeciego miesiąca po roku podatkowym, ale były przedłużenia (np. za 2021). Wpisz właściwą datę. Licznik nie obejmuje CIT estońskiego." : "Podpowiedź uwzględnia weekendy i święta, ale nie indywidualne ulgi ani szczególne przedłużenia. Dla starszego PIT-28 sprawdź odmienny termin."}</p> : null}
       {input.taxKind ? (
         <fieldset className="space-y-3">
           <legend className="text-sm font-semibold">Co mogło zatrzymać zegar?</legend>
+          <Check id="bankruptcy" checked={input.bankruptcy} onChange={(bankruptcy) => patch({ bankruptcy })} label="Ogłoszenie upadłości" />
+          <Check id="other-events" checked={input.otherEvents} onChange={(otherEvents) => patch({ otherEvents })} label="Nie wiem / inne zdarzenia lub przepisy szczególne" />
           <Check
             id="enforcement"
             checked={input.enforcement}
@@ -211,7 +216,7 @@ export function LicznikForm() {
       ) : null}
 
       {error ? (
-        <p className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900">
+        <p role="alert" className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900">
           {error}
         </p>
       ) : null}
@@ -226,8 +231,15 @@ export function LicznikForm() {
       </button>
 
       {result ? (
-        <div id="wynik-do-druku" className="space-y-6">
+        <div id="wynik-do-druku" className="report-page space-y-6">
+          <PrintReport compact kind="TERMIN PRZEDAWNIENIA" date={formatPl(new Date())} title={result.title} summary={result.summary} signal={result.signal}
+            steps={result.nextSteps} sources={result.legalBasis}
+            stats={[{label:"Termin płatności",value:formatPl(result.paymentDue)},{label:"Bazowy koniec 5 lat",value:formatPl(result.baseEnd)}]}
+            answers={[{label:"Okres podatkowy",value:result.periodLabel},{label:"Termin płatności",value:formatPl(result.paymentDue)},{label:"Zaznaczone zdarzenia",value:result.suspensions.length ? result.suspensions.join("; ") : "Nie zaznaczono"}]}
+            note={result.instrumentalRisk ? "KKS w ostatnich 90 dniach przed terminem bazowym: sprawdź akta. To umowny próg diagnostyczny, nie dowód instrumentalności ani automatyczny brak zawieszenia." : undefined}
+            groups={[{title:"Zdarzenia wpływające na termin",items:result.suspensions.length ? result.suspensions.map((body,i)=>({title:`Zdarzenie ${i+1}`,body})) : [{title:"Brak zaznaczonych zdarzeń",body:"Pokazujemy datę bazową. Brak zaznaczeń nie dowodzi braku zdarzeń; katalog w formularzu nie jest pełny."}]}]} />
           <Semafor signal={result.signal} title={result.title} summary={result.summary} />
+        <ReportActions text={licznikPlainText(result)} />
           <dl className="grid gap-3 sm:grid-cols-3">
             <Stat label="Termin płatności" value={formatPl(result.paymentDue)} />
             <Stat label="Bazowy koniec 5 lat" value={formatPl(result.baseEnd)} />
@@ -240,8 +252,7 @@ export function LicznikForm() {
           </dl>
           {result.instrumentalRisk ? (
             <p className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-              Flaga instrumentalności: KKS blisko końca roku albo bez daty. NSA (I FPS 1/21, I FSK
-              379/22 z 21.03.2025) mówi, że takie wszczęcie nie zawiesza przedawnienia.
+              KKS w ostatnich 90 dniach przed terminem bazowym: sprawdź akta. To umowny próg diagnostyczny, nie dowód instrumentalności ani automatyczny brak zawieszenia.
             </p>
           ) : null}
           <LegalList
@@ -255,7 +266,7 @@ export function LicznikForm() {
                 : [
                     {
                       title: "Brak zaznaczonych zawieszeń",
-                      body: "Liczymy czysty art. 70 § 1. Jeśli urząd twierdzi inaczej — niech pokaże zawiadomienie.",
+                      body: "Pokazujemy datę bazową. Brak zaznaczeń nie dowodzi braku zdarzeń; katalog w formularzu nie jest pełny.",
                     },
                   ]
             }
@@ -272,7 +283,7 @@ export function LicznikForm() {
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
               {result.legalBasis.map((item) => (
                 <li key={item.cite}>
-                  <span className="font-semibold text-foreground">{item.cite}</span>
+                  <a className="font-semibold text-foreground underline" href={item.url} target="_blank" rel="noreferrer">{item.cite} ↗</a>
                   {" — "}
                   {item.note}
                 </li>

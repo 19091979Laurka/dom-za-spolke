@@ -102,20 +102,20 @@ export async function saveLead(input: LeadInput): Promise<Lead> {
 }
 
 export function leadsKeyOk(key: string | undefined): boolean {
-  const expected = process.env.LEADS_KEY?.trim() || "szuwara";
-  return Boolean(key) && key === expected;
+  const expected = process.env.LEADS_KEY?.trim();
+  return Boolean(expected && expected.length >= 24 && key && key === expected);
 }
 
-export async function notifyLeadWebhook(lead: Lead): Promise<void> {
+export async function deliverLead(input: LeadInput): Promise<Lead> {
   const url = process.env.LEAD_WEBHOOK?.trim();
-  if (!url) return;
-  try {
-    await fetch(url, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(lead),
-    });
-  } catch {
-    // Lokalny zapis i tak zostaje. Webhook jest dodatkiem.
-  }
+  if (!url || !url.startsWith("https://")) throw new Error("LEAD_DELIVERY_UNAVAILABLE");
+  const lead = { id: crypto.randomUUID(), createdAt: new Date().toISOString(), ...input };
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(lead),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!response.ok) throw new Error("LEAD_DELIVERY_FAILED");
+  return lead;
 }

@@ -16,6 +16,7 @@ export function ChoiceCard({
       type="button"
       disabled={disabled}
       onClick={onClick}
+      aria-pressed={selected}
       data-selected={selected}
       className="brand-choice"
     >

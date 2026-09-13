@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   allowLeadFrom,
-  notifyLeadWebhook,
-  saveLead,
+  deliverLead,
   validateLeadInput,
 } from "@/lib/leads";
 
@@ -32,12 +31,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
 
-  const lead = await saveLead(parsed.data);
-  void notifyLeadWebhook(lead);
+  let lead;
+  try { lead = await deliverLead(parsed.data); }
+  catch { return NextResponse.json({ error: "Nie potwierdzono odbioru zgłoszenia. Skorzystaj z wiadomości e-mail lub telefonu." }, { status: 503 }); }
 
   return NextResponse.json({
     ok: true,
     id: lead.id,
-    message: "Dostaliśmy numer. Oddzwonimy w 1 dzień roboczy.",
+    message: "Zgłoszenie przekazano do kancelarii. Kontakt nie zatrzymuje terminów.",
   });
 }

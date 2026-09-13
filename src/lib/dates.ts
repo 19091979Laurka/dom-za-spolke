@@ -46,3 +46,8 @@ export function isOnOrBefore(a: Date, b: Date): boolean {
 export function isOnOrAfter(a: Date, b: Date): boolean {
   return startOfDay(a).getTime() >= startOfDay(b).getTime();
 }
+
+/** Calendar date, without the UTC shift introduced by toISOString(). */
+export function formatIsoLocal(date: Date): string {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
