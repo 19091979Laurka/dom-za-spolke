@@ -33,7 +33,7 @@ export default function HomePage() {
               </ul>
             </div>
             <aside className="hero-visual" aria-label="Kancelaria Szuwara — prawo i podatki">
-              <div className="hero-photo"><Image src="/brand/gabinet.png" alt="Gabinet Kancelarii Szuwara z logo na ścianie" fill priority sizes="(min-width: 960px) 50vw, 100vw" />
+              <div className="hero-photo"><Image src="/brand/gabinet.webp" alt="Gabinet Kancelarii Szuwara z logo na ścianie" fill priority sizes="(min-width: 960px) 50vw, 100vw" />
                 <div className="hero-photo-label"><span>01 / PRAWO DO OBRONY</span><span>ART. 116 O.P.</span></div>
                 <div className="hero-orbit" aria-hidden="true" />
               </div>
