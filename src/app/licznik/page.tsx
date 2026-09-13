@@ -5,7 +5,8 @@ import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   title: "Licznik Fiskusa",
-  description: "Ile dni zostało urzędowi na VAT 2021, PIT i CIT. Art. 70 O.p. i instrumentalne KKS.",
+  description: "Ile dni zostało urzędowi na VAT 2021, PIT i CIT. Bazowy termin przedawnienia z art. 70 O.p. i sygnał instrumentalnego KKS.",
+  alternates: { canonical: "/licznik" },
 };
 
 export default function LicznikPage() {

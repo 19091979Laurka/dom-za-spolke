@@ -6,7 +6,8 @@ import { SiteHeader } from "@/components/site-header";
 export const metadata: Metadata = {
   title: "Diagnostyk art. 116",
   description:
-    "Czy fiskus może zająć Twój majątek za zaległości spółki? Semafor po Adjak i Genzyński.",
+    "Czy fiskus może zająć Twój majątek za zaległości spółki? Sześć kroków, semafor ryzyka i kierunki obrony po wyrokach TSUE Adjak i Genzyński.",
+  alternates: { canonical: "/diagnostyk" },
 };
 
 export default function DiagnostykPage() {

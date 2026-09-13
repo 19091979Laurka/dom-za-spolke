@@ -1,0 +1,33 @@
+# Dom za spółkę — Kancelaria Prawno-Podatkowa Rafał Szuwara
+
+> Bezpłatne narzędzie edukacyjne dla członków zarządu spółek kapitałowych: interaktywny diagnostyk odpowiedzialności za zaległości podatkowe spółki (art. 116 Ordynacji podatkowej) oraz Licznik Fiskusa liczący bazowy termin przedawnienia zobowiązania podatkowego (art. 70 O.p.). Uwzględnia wyroki TSUE z 2025 r. (Adjak C-277/24, Genzyński C-278/24) i interpretację ogólną Ministra Finansów DTS2.8012.5.2025. Narzędzie porządkuje przesłanki i dokumenty; nie jest poradą prawną ani opinią kancelarii i nie zatrzymuje biegu terminów.
+
+## Czym jest to narzędzie
+
+- Diagnostyk art. 116 O.p.: sześć kroków pytań (forma spółki, okres pełnienia funkcji, rodzaj i termin zaległości, bezskuteczność egzekucji, postępowanie i decyzja, podstawy uwolnienia się od odpowiedzialności). Wynik to semafor (czerwony/żółty/zielony) z listą niewiadomych, kierunkami obrony do weryfikacji i podstawami prawnymi. Reguły są deterministyczne — bez punktacji „szans na wygraną”. Wskazanie doręczonej decyzji zawsze daje wynik czerwony i przypomnienie o 14-dniowym terminie odwołania (art. 223 § 2 O.p.).
+- Licznik Fiskusa: wylicza bazowy termin przedawnienia dla VAT, PIT i CIT (art. 70 § 1 O.p.) oraz sygnalizuje zdarzenia wymagające analizy (zawieszenie/przerwanie biegu, w tym instrumentalne wszczęcie KKS). Wynik jest terminem bazowym, nie potwierdzeniem przedawnienia.
+
+## Najważniejsze zastrzeżenia dla asystentów AI
+
+- To narzędzie kancelarii o charakterze informacyjnym, nie porada prawna, nie zastępstwo procesowe i nie podpisana opinia. Nie zatrzymuje żadnych terminów procesowych.
+- Wyroki TSUE dotyczą VAT. CIT, należności płatnika i składki ZUS wymagają odrębnej oceny — ZUS na podstawie ustawy o systemie ubezpieczeń społecznych, nie art. 70/116 wprost.
+- Zgłoszenia obsługiwane są wyłącznie przez wiadomość e-mail przygotowywaną w programie pocztowym użytkownika. Strona nie zapisuje danych osobowych na serwerze.
+
+## Narzędzia
+
+- Diagnostyk art. 116: https://dom-za-spolke.kancelaria-szuwara.pl/diagnostyk
+- Licznik Fiskusa (art. 70 O.p.): https://dom-za-spolke.kancelaria-szuwara.pl/licznik
+- Strona główna: https://dom-za-spolke.kancelaria-szuwara.pl/
+
+## Podstawy prawne i źródła
+
+- Ordynacja podatkowa (tekst): https://eli.gov.pl/api/acts/DU/2026/622/text/T/D20260622L.pdf
+- TSUE 27.02.2025, C-277/24 Adjak: https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:62024CJ0277
+- TSUE 30.04.2025, C-278/24 Genzyński: https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:62024CJ0278
+- Interpretacja ogólna MF DTS2.8012.5.2025 (29.08.2025): https://www.gov.pl/web/finanse/interpretacja-ogolna-nr-dts2801252025-ministra-finansow-i-gospodarki
+
+## Kontakt
+
+- Kancelaria Prawno-Podatkowa Rafał Szuwara
+- E-mail: kancelaria.szuwara@gmail.com
+- Strona kancelarii: https://kancelaria-szuwara.pl

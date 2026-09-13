@@ -43,8 +43,9 @@ test('report print excludes contact form and retains result',async({page})=>{
  await complete(page);await page.emulateMedia({media:'print'});await expect(page.locator('#wynik-kontakt')).not.toBeVisible();await expect(page.locator('.pdf-document')).toBeVisible();await expect(page.locator('.report-signal')).not.toBeVisible();await expect(page.locator('.pdf-letterhead img').first()).toBeVisible();
  await page.pdf({path:'../../outputs/przykladowy-raport.pdf',format:'A4',printBackground:true});
 });
-test('private endpoints deny weak and URL secrets; contact does not POST',async({page,request})=>{
- expect((await request.get('/api/leads?k=szuwara')).status()).toBe(401);
+test('contact never posts to a server; lead inbox routes are gone',async({page,request})=>{
+ expect((await request.get('/api/leads?k=szuwara')).status()).toBe(404);
+ expect((await request.get('/leady')).status()).toBe(404);
  const posts:string[]=[];page.on('request',r=>{if(r.method()==='POST')posts.push(r.url());});await page.goto('/');await page.locator('#lead-name-landing').fill('TEST AUDYTU');await page.locator('#lead-phone-landing').fill('000000000');await page.getByRole('button',{name:/Przygotuj e-mail/}).click();await expect(page.getByRole('status').filter({hasText:'Zaznacz'})).toBeVisible();expect(posts).toHaveLength(0);
 });
 

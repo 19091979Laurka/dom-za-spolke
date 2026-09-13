@@ -41,10 +41,9 @@ Zmiany funkcjonalne: 45521ca. Bezstratna optymalizacja zdjęcia: fad06bef7e94a43
 
 ### Kontakt i bezpieczeństwo
 
-- Formularz przygotowuje mailto; klient sam wysyła wiadomość ze swojego programu pocztowego. Nie ma potwierdzenia dostarczenia ani automatycznego zapisu zgłoszenia.
-- Pozostawione POST /api/lead wymaga działającego HTTPS webhooka; brak/błąd dostarczenia zwraca 503. Nie skonfigurowano produkcyjnej obsługi leadów.
-- GET /api/leads wymaga Bearer i LEADS_KEY o długości co najmniej 24 znaków. Usunięto działanie domyślnego sekretu i sekretu w URL; /leady nie wyświetla danych.
-- Nie wysyłano rzeczywistych zgłoszeń ani nie pobierano danych klientów. Nie traktować pozostawionych funkcji plikowego odczytu/zapisu jako trwałego magazynu na Vercelu.
+- Formularz przygotowuje wyłącznie `mailto:`; klient sam wysyła wiadomość ze swojego programu pocztowego. Nie ma potwierdzenia dostarczenia ani automatycznego zapisu zgłoszenia.
+- Usunięto całą serwerową obsługę leadów: endpointy `POST /api/lead` i `GET /api/leads`, stronę `/leady` oraz bibliotekę zapisu/odczytu plikowego. Strona nie przyjmuje zgłoszeń przez API i nie prowadzi skrzynki odbiorczej — brak magazynu danych osobowych po stronie serwera (usunięte ryzyko RODO oraz błąd 500/read-only na Vercelu z pierwotnego audytu).
+- Nie wysyłano rzeczywistych zgłoszeń ani nie pobierano danych klientów. Kanałem kontaktu pozostaje e-mail i telefon kancelarii.
 
 ## Znane punkty wymagające decyzji lub poprawki
 

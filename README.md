@@ -21,11 +21,9 @@ npm run test:e2e
 - Raport obejmuje odpowiedzi, uzasadnienie, plan działania i źródła. Druk/PDF korzysta z osobnego układu kancelarii; dostępny jest również eksport TXT.
 - Wzorzec marki: nowa strona kancelaria-szuwara.vercel.app. Logo i zdjęcie w public/brand.
 
-## Kontakt i API
+## Kontakt
 
-Formularz przygotowuje wiadomość w programie pocztowym użytkownika. Użytkownik musi wysłać ją sam; strona nie potwierdza dostarczenia ani nie zapisuje formularza na serwerze.
-
-Pozostawione API POST /api/lead wymaga działającego HTTPS LEAD_WEBHOOK; błąd lub brak dostarczenia zwraca 503. Nie używać lokalnego pliku jako produkcyjnego magazynu zgłoszeń. GET /api/leads wymaga Authorization: Bearer oraz LEADS_KEY o długości co najmniej 24 znaków. Nie ma domyślnego klucza ani autoryzacji sekretem w URL. Automatyczna dostawa i magazyn zgłoszeń nie zostały skonfigurowane ani przetestowane produkcyjnie.
+Formularz przygotowuje wyłącznie wiadomość `mailto:` w programie pocztowym użytkownika. Użytkownik wysyła ją sam; strona nie zapisuje danych na serwerze, nie wysyła ich żadnym API i nie potwierdza dostarczenia. Nie ma serwerowego endpointu przyjmującego zgłoszenia ani skrzynki odbiorczej — dane kontaktowe nie są nigdzie po stronie serwera przechowywane (bez ryzyka RODO związanego z magazynem zgłoszeń).
 
 ## Do niezależnego audytu i wdrożenia końcowego
 

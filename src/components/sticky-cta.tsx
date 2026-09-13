@@ -6,7 +6,6 @@ import { firmTelHref } from "@/lib/firm";
 
 export function StickyCta() {
   const path = usePathname();
-  if (path === "/leady") return null;
 
   return (
     <div className="brand-dock print:hidden" aria-label="Szybki kontakt">

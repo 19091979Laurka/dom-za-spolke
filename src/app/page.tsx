@@ -3,9 +3,46 @@ import Image from "next/image";
 import { LeadCta } from "@/components/lead-cta";
 import { SiteHeader } from "@/components/site-header";
 
+const FAQ = [
+  {
+    q: "Czy fiskus naprawdę może iść po mój dom?",
+    a: "Art. 116 O.p. pozwala wydać decyzję na cały majątek osobisty członka zarządu — dom, lokatę, udział w mieszkaniu — gdy egzekucja ze spółki okazała się bezskuteczna. To osobista odpowiedzialność, nie kara za spółkę. Diagnostyk porządkuje przesłanki i dokumenty potrzebne do indywidualnej oceny.",
+  },
+  {
+    q: "Wyroki TSUE z 2025 r. zamykają sprawę?",
+    a: "Nie. Wyroki Adjak i Genzyński potwierdzają gwarancje obrony, ale nie uchylają odpowiedzialności członków zarządu. Należy sprawdzić przesłanki, sformułować konkretne zarzuty i dotrzymać terminów. Sam brak dostępu do akt nie oznacza wygranej.",
+  },
+  {
+    q: "Dla kogo jest ten diagnostyk?",
+    a: "Dla obecnego albo byłego członka zarządu spółki z o.o., S.A. albo prostej spółki akcyjnej, gdy pojawia się zaległość spółki albo pismo z art. 116. Dla JDG oraz spółek cywilnej, jawnej i komandytowej art. 116 zwykle nie ma zastosowania — tam pomocny jest Licznik Fiskusa.",
+  },
+  {
+    q: "VAT, CIT i ZUS liczycie tak samo?",
+    a: "Nie. Wyroki TSUE dotyczą VAT. Przy CIT i należnościach płatnika trzeba ocenić przepisy krajowe i interpretację MF. Składki ZUS wymagają odrębnej analizy. Licznik wyznacza tylko bazowy termin podatkowy.",
+  },
+  {
+    q: "Co się dzieje z numerem telefonu?",
+    a: "Dane i odpowiedzi pozostają w tej karcie przeglądarki. Formularz przygotowuje wiadomość w Twoim programie pocztowym — dopiero Ty ją wysyłasz do kancelarii. Strona nie zapisuje danych na serwerze. Sam wynik możesz pobrać bez podawania danych kontaktowych.",
+  },
+];
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <SiteHeader current="home" />
       <main id="main-content">
         <section className="brand-hero">
@@ -112,41 +149,12 @@ export default function HomePage() {
             <p className="brand-eyebrow-plain">Najczęściej pytacie</p>
             <h2 id="faq-heading">Najpierw porządkujemy pytania. Potem semafor.</h2>
             <div className="brand-faq">
-              <details open>
-                <summary>Czy fiskus naprawdę może iść po mój dom?</summary>
-                <p>
-                  Art. 116 O.p. to decyzja na cały majątek członka zarządu — dom, lokata, udział w
-                  mieszkaniu — gdy egzekucja ze spółki padła. To nie kara za spółkę. To osobista
-                  odpowiedzialność. Diagnostyk porządkuje przesłanki i dokumenty potrzebne do indywidualnej oceny.
-                </p>
-              </details>
-              <details>
-                <summary>Wyroki TSUE z 2025 r. zamykają sprawę?</summary>
-                <p>
-                  Nie. Wyroki potwierdzają gwarancje obrony, ale nie uchylają odpowiedzialności członków zarządu. Należy sprawdzić przesłanki, sformułować konkretne zarzuty i dotrzymać terminów. Brak dostępu do akt sam w sobie nie oznacza wygranej.
-                </p>
-              </details>
-              <details>
-                <summary>Dla kogo jest ten diagnostyk?</summary>
-                <p>
-                  Dla członka albo byłego członka zarządu spółki z o.o., S.A. albo prostej spółki
-                  akcyjnej, gdy na stole jest zaległość spółki albo już pismo z art. 116. JDG,
-                  cywilna, jawna i komandytowa — art. 116 raczej nie. Tam idziesz do Licznika
-                  Fiskusa.
-                </p>
-              </details>
-              <details>
-                <summary>VAT, CIT i ZUS liczycie tak samo?</summary>
-                <p>
-                  Nie. Wyroki TSUE dotyczą VAT. Przy CIT i należnościach płatnika trzeba ocenić przepisy krajowe i interpretację MF. Składki ZUS wymagają odrębnej analizy. Licznik wyznacza tylko bazowy termin podatkowy.
-                </p>
-              </details>
-              <details>
-                <summary>Co się dzieje z numerem telefonu?</summary>
-                <p>
-                  Dane i odpowiedzi pozostają w tej karcie przeglądarki. Formularz przygotowuje wiadomość w Twoim programie pocztowym — dopiero Ty ją wysyłasz do kancelarii. Sam wynik możesz pobrać bez podawania danych kontaktowych.
-                </p>
-              </details>
+              {FAQ.map(({ q, a }, i) => (
+                <details key={q} open={i === 0}>
+                  <summary>{q}</summary>
+                  <p>{a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>

@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { diagnoseArt116, emptyArt116Answers, art118Deadline, validateArt116Step, resultPlainText } from '../src/lib/art116';
 import { diagnoseLimitation, emptyLicznikInput, suggestPaymentDue, licznikPlainText } from '../src/lib/przedawnienie';
 import { formatIsoLocal, parseIsoDate } from '../src/lib/dates';
-import { leadsKeyOk, deliverLead } from '../src/lib/leads';
 const now = new Date(2026,8,12);
 const base = {...emptyArt116Answers(), companyForm:'spzoo', tenureStart:'2020-01-01', arrearKind:'vat', paymentDue:'2021-02-25', specialCase:'no', enforcementFruitless:'yes', proceeding116:'no', decisionIssued:'no', insolvencyFiled:'no', noFault:'no', companyAssetsPointed:'no', hadCompanyDecision:'yes', hadFileAccess:'yes', kksNearLimitation:'no'} as const;
 test('art. 118: year begins with arrear, not due date; Dec 31 boundary',()=>assert.equal(formatIsoLocal(art118Deadline(new Date(2020,11,31))),'2026-12-31'));
@@ -16,6 +15,12 @@ test('exculpation requires proof; not automatic green',()=>{
 test('unknowns cannot add up to green',()=>assert.equal(diagnoseArt116({...base,enforcementFruitless:'unknown',insolvencyFiled:'unknown',noFault:'unknown',companyAssetsPointed:'unknown'},now).signal,'yellow'));
 test('outside tenure with ordinary scope and no proceeding is conditional green',()=>assert.equal(diagnoseArt116({...base,tenureStart:'2022-01-01'},now).signal,'green'));
 test('existing decision keeps urgency even after base deadline or outside tenure',()=>assert.equal(diagnoseArt116({...base,tenureStart:'2022-01-01',paymentDue:'2016-01-25',decisionIssued:'yes'},now).signal,'red'));
+test('decision case surfaces the 14-day appeal deadline (art. 223)',()=>{
+ const r=diagnoseArt116({...base,decisionIssued:'yes'},now);
+ assert.equal(r.signal,'red');
+ assert.ok(r.defenses.some(d=>/14 dni/.test(d.body)));
+ assert.ok(r.legalBasis.some(l=>/art\. 223/.test(l.cite)));
+});
 test('expiry without decision documents is not assurance',()=>assert.notEqual(diagnoseArt116({...base,paymentDue:'2020-01-25'},now).signal,'green'));
 test('special cases and ZUS never ordinary green',()=>{
  for (const patch of [{specialCase:'yes'},{specialCase:'unknown'},{arrearKind:'zus'}] as const) assert.equal(diagnoseArt116({...base,tenureStart:'2022-01-01',...patch},now).signal,'yellow');
@@ -68,9 +73,4 @@ test('unknown KKS date is not evidence; future date rejected',()=>{
 test('report exports local calendar date, inputs, actions and sources',()=>{
  const r=diagnoseLimitation(tax,now);assert.ok(!('error'in r));assert.match(licznikPlainText(r),/2021-02-25/);assert.match(licznikPlainText(r),/2026-12-31/);
  const txt=resultPlainText(diagnoseArt116(base,now));for(const part of ['TWOJE ODPOWIEDZI','CO ZROBIĆ TERAZ','https://','2026-09-12'])assert.ok(txt.includes(part));
-});
-test('default secret is denied and missing delivery never succeeds',async()=>{
- const old=process.env.LEADS_KEY;delete process.env.LEADS_KEY;assert.equal(leadsKeyOk('szuwara'),false);if(old)process.env.LEADS_KEY=old;
- const hook=process.env.LEAD_WEBHOOK;delete process.env.LEAD_WEBHOOK;
- await assert.rejects(()=>deliverLead({name:'TEST',phone:'000000000',email:'',note:'',source:'landing',subject:'TEST',resultText:''}));if(hook)process.env.LEAD_WEBHOOK=hook;
 });

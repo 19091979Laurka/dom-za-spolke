@@ -180,6 +180,10 @@ export function diagnoseArt116(a: Art116Answers, today = new Date()): Art116Resu
   premises.push({ label: "Możliwość uwolnienia się od odpowiedzialności", status: "unclear", detail: hasDefense ? "Wskazano podstawę obrony, która wymaga potwierdzenia. Deklaracja w formularzu nie oznacza spełnienia przesłanki." : "Nie potwierdzono podstawy obrony. Odpowiedź „Nie wiem” nie oznacza, że taka podstawa nie istnieje." });
   if (a.hadFileAccess === "no") defenses.push({ title: "Dostęp do akt i prawo do obrony", body: zusPath ? "Wystąp o akta we właściwym trybie ZUS. Wyroki dotyczące VAT nie rozstrzygają automatycznie spraw składkowych." : "Wystąp o potrzebne akta i wskaż konkretne kwestionowane ustalenia oraz dowody. Brak dostępu może uzasadniać zarzut proceduralny, ale sam nie znosi zaległości ani odpowiedzialności.", strength: "medium" });
   if (!zusPath && a.kksNearLimitation === "yes") defenses.push({ title: "Weryfikacja celu i przebiegu KKS", body: "Bliskość przedawnienia jest sygnałem do sprawdzenia akt, nie dowodem instrumentalności. Zbadaj czynności, ich uzasadnienie i prawidłowość zawiadomienia. Nie odejmujemy za to ryzyka odpowiedzialności.", strength: "medium" });
+  if (a.decisionIssued === "yes") {
+    defenses.unshift({ title: "Masz już decyzję — pilnuj terminu odwołania", body: "Od doręczenia decyzji o odpowiedzialności biegnie zwykle 14 dni na wniesienie odwołania (art. 223 § 2 O.p.). Sprawdź datę doręczenia i pouczenie w samej decyzji — to one wyznaczają termin. Jeśli 14 dni już biegnie, nie zwlekaj; złożenie odwołania nie zależy od wyniku tego formularza. Przy uchybieniu terminu pozostaje wniosek o jego przywrócenie, który wymaga uprawdopodobnienia braku winy.", strength: "strong" });
+    legalBasis.push({ cite: "art. 223 § 2 O.p.", note: "Odwołanie od decyzji organu pierwszej instancji wnosi się w terminie 14 dni od dnia jej doręczenia.", url: OP });
+  }
   // Decision rules, deliberately no additive score or percentage of winning.
   let signal: Signal = "yellow";
   if (valid && ordinary && !zusPath) {

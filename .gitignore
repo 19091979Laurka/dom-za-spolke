@@ -43,9 +43,6 @@ next-env.d.ts
 # local research dumps
 /agent-tools/
 
-# incoming leads (PII)
-/data/leads.json
-
 /.superdesign/
 /test-results/
 /playwright-report/
