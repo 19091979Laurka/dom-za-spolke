@@ -2,11 +2,18 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/disclaimer";
 import { LicznikForm } from "@/components/licznik-form";
 import { SiteHeader } from "@/components/site-header";
+import { pageOpenGraph, pageTwitter } from "@/lib/site";
+
+const OG_TITLE = "Licznik Fiskusa — Dom za spółkę";
+const DESC =
+  "Ile dni zostało urzędowi na VAT 2021, PIT i CIT. Bazowy termin przedawnienia z art. 70 O.p. i sygnał instrumentalnego KKS.";
 
 export const metadata: Metadata = {
   title: "Licznik Fiskusa",
-  description: "Ile dni zostało urzędowi na VAT 2021, PIT i CIT. Bazowy termin przedawnienia z art. 70 O.p. i sygnał instrumentalnego KKS.",
+  description: DESC,
   alternates: { canonical: "/licznik" },
+  openGraph: pageOpenGraph("/licznik", OG_TITLE, DESC),
+  twitter: pageTwitter(OG_TITLE, DESC),
 };
 
 export default function LicznikPage() {

@@ -169,11 +169,11 @@ export default function HomePage() {
             </p>
             <LeadCta
               source="landing"
-              subject="Dom za spółkę — oddzwońcie"
+              subject="Dom za spółkę — prośba o kontakt"
               resultText=""
               tone="dark"
               heading="Jedna rozmowa. Jasne kolejne kroki."
-              blurb="Numer idzie do kancelarii, nie do newslettera."
+              blurb="Formularz przygotuje gotową wiadomość — wysyłasz ją samodzielnie ze swojej poczty."
             />
           </div>
         </section>

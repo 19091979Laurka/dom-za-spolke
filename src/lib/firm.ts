@@ -18,9 +18,11 @@ export function firmTelHref(): string {
 }
 
 export function firmMailto(subject?: string, body?: string): string {
-  const params = new URLSearchParams();
-  if (subject) params.set("subject", subject);
-  if (body) params.set("body", body);
-  const query = params.toString();
+  // RFC 6068: mailto params must be percent-encoded. URLSearchParams encodes
+  // spaces as "+", which mail clients render literally — so encode manually.
+  const parts: string[] = [];
+  if (subject) parts.push(`subject=${encodeURIComponent(subject)}`);
+  if (body) parts.push(`body=${encodeURIComponent(body)}`);
+  const query = parts.join("&");
   return `mailto:${FIRM.email}${query ? `?${query}` : ""}`;
 }

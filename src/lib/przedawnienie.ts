@@ -158,7 +158,10 @@ export function diagnoseLimitation(
   }
 
   let signal: LicznikResult["signal"];
-  if (expired && suspensions.length === 0) signal = "green";
+  // Expired base term with nothing ticked is NOT a confirmed lapse — the user
+  // often does not know about a 70c notice or an enforcement step. Absence of
+  // clicks means "don't know", so this stays yellow (never a reassuring green).
+  if (expired && suspensions.length === 0) signal = "yellow";
   else if (instrumentalRisk) signal = "yellow";
   else if (daysLeft <= 120 && !expired) signal = "red";
   else if (suspensions.length > 0) signal = "yellow";
@@ -171,7 +174,7 @@ export function diagnoseLimitation(
   const title = expired
     ? suspensions.length
       ? `${label}: termin bazowy minął — sprawdź wpływ zdarzeń`
-      : `${label}: bazowy termin minął ${formatPl(baseEnd)}`
+      : `${label}: bazowy termin minął ${formatPl(baseEnd)} — wymaga potwierdzenia`
     : daysLeft <= 120
       ? `${label}: ${daysLeft} dni do terminu bazowego`
       : `${label}: bazowo do ${formatPl(baseEnd)}`;
@@ -189,7 +192,7 @@ export function diagnoseLimitation(
   const nextSteps = expired
     ? [
         "Nie składaj korekty „na wszelki wypadek” za okres, który uważasz za przedawniony, bez oceny skutków.",
-        "Jeśli decyzja zapadła po terminie — badamy umorzenie postępowania.",
+        "Jeśli decyzja zapadła po upływie właściwego terminu — do zbadania jest, czy postępowanie podlega umorzeniu (art. 208 O.p.). Ten licznik tego nie rozstrzyga; osobno ocenia się decyzję wobec spółki i wobec osoby trzeciej.",
         "Przy KKS zbadaj cel i przebieg postępowania oraz zawiadomienie. Bliskość terminu sama nie dowodzi instrumentalności.",
       ]
     : [

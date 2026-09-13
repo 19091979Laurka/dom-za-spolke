@@ -3,7 +3,14 @@ import assert from 'node:assert/strict';
 import { diagnoseArt116, emptyArt116Answers, art118Deadline, validateArt116Step, resultPlainText } from '../src/lib/art116';
 import { diagnoseLimitation, emptyLicznikInput, suggestPaymentDue, licznikPlainText } from '../src/lib/przedawnienie';
 import { formatIsoLocal, parseIsoDate } from '../src/lib/dates';
+import { firmMailto } from '../src/lib/firm';
 const now = new Date(2026,8,12);
+test('mailto percent-encodes spaces (no "+"), per RFC 6068',()=>{
+ const m=firmMailto('Dom za spółkę — test','Imię i nazwisko: Jan Kowalski\nTelefon: 500');
+ assert.ok(!m.includes('+'));
+ assert.ok(m.includes('%20'));
+ assert.match(m,/^mailto:[^?]+\?subject=/);
+});
 const base = {...emptyArt116Answers(), companyForm:'spzoo', tenureStart:'2020-01-01', arrearKind:'vat', paymentDue:'2021-02-25', specialCase:'no', enforcementFruitless:'yes', proceeding116:'no', decisionIssued:'no', insolvencyFiled:'no', noFault:'no', companyAssetsPointed:'no', hadCompanyDecision:'yes', hadFileAccess:'yes', kksNearLimitation:'no'} as const;
 test('art. 118: year begins with arrear, not due date; Dec 31 boundary',()=>assert.equal(formatIsoLocal(art118Deadline(new Date(2020,11,31))),'2026-12-31'));
 test('ordinary high risk remains red with procedural objections',()=>{
@@ -63,7 +70,7 @@ test('all 128 event combinations retain uncertainty if any event is checked',()=
  const keys=['enforcement','mortgage','installments','courtComplaint','kks70c','bankruptcy','otherEvents'] as const;
  for(let mask=0;mask<128;mask++){
   const p={...tax};keys.forEach((k,i)=>p[k]=!!(mask&(1<<i)));
-  const r=diagnoseLimitation(p,new Date(2027,0,1));assert.ok(!('error' in r));assert.equal(r.signal,mask?'yellow':'green');
+  const r=diagnoseLimitation(p,new Date(2027,0,1));assert.ok(!('error' in r));assert.equal(r.signal,'yellow');
  }
 });
 test('unknown KKS date is not evidence; future date rejected',()=>{

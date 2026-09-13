@@ -22,7 +22,7 @@ export function SiteFooter() {
           <p className="brand-footer-label">Kontakt</p>
           <a href={firmTelHref()}>{FIRM.phone}</a>
           <a href={firmMailto()}>{FIRM.email}</a>
-          <Link href="/#kontakt">Zostaw numer</Link>
+          <Link href="/#kontakt">Napisz do kancelarii</Link>
         </div>
         <div>
           <p className="brand-footer-label">Narzędzia</p>

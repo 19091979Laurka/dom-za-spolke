@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import { Art116Wizard } from "@/components/art116-wizard";
 import { Disclaimer } from "@/components/disclaimer";
 import { SiteHeader } from "@/components/site-header";
+import { pageOpenGraph, pageTwitter } from "@/lib/site";
+
+const OG_TITLE = "Diagnostyk art. 116 — Dom za spółkę";
+const DESC =
+  "Czy fiskus może zająć Twój majątek za zaległości spółki? Sześć kroków, semafor ryzyka i kierunki obrony po wyrokach TSUE Adjak i Genzyński.";
 
 export const metadata: Metadata = {
   title: "Diagnostyk art. 116",
-  description:
-    "Czy fiskus może zająć Twój majątek za zaległości spółki? Sześć kroków, semafor ryzyka i kierunki obrony po wyrokach TSUE Adjak i Genzyński.",
+  description: DESC,
   alternates: { canonical: "/diagnostyk" },
+  openGraph: pageOpenGraph("/diagnostyk", OG_TITLE, DESC),
+  twitter: pageTwitter(OG_TITLE, DESC),
 };
 
 export default function DiagnostykPage() {

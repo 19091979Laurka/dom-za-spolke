@@ -104,7 +104,9 @@ const legalServiceLd = {
     "postępowanie podatkowe i sądowoadministracyjne",
   ],
   founder: { "@type": "Person", name: FIRM.lawyer },
-  sameAs: [FIRM.site, FIRM.accountingSite],
+  // sameAs asserts entity identity — the accounting office (ksiegowoscplock.pl)
+  // is a separate legal entity (Laura Szuwara), so it must not be listed here.
+  sameAs: [FIRM.site],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
