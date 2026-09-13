@@ -72,7 +72,7 @@ export function LegalList({
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <p className="font-extrabold">{item.title}</p>
               {item.meta ? (
-                <span className="text-xs font-extrabold tracking-wide text-[var(--gold)] uppercase">
+                <span className="text-xs font-extrabold tracking-wide text-[var(--gold-deep)] uppercase">
                   {item.meta}
                 </span>
               ) : null}

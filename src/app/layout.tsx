@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { DM_Sans, Inter, Playfair_Display } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { DM_Sans, Inter } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { StickyCta } from "@/components/sticky-cta";
 import { FIRM, firmTelHref } from "@/lib/firm";
@@ -16,11 +16,6 @@ const inter = Inter({
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
-  subsets: ["latin", "latin-ext"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
   subsets: ["latin", "latin-ext"],
 });
 
@@ -70,10 +65,10 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     images: [
       {
-        url: "/brand/gabinet.webp",
-        width: 1672,
-        height: 941,
-        alt: "Kancelaria Szuwara — diagnostyk art. 116 „Dom za spółkę”",
+        url: "/brand/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Dom za spółkę — diagnostyk art. 116, Kancelaria Szuwara",
       },
     ],
   },
@@ -81,8 +76,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${FIRM.product} — ${FIRM.tagline}`,
     description: DESCRIPTION,
-    images: ["/brand/gabinet.webp"],
+    images: ["/brand/og.png"],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1e3a2f",
 };
 
 const legalServiceLd = {
@@ -120,7 +119,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pl"
-      className={`${inter.variable} ${dmSans.variable} ${playfair.variable} h-full antialiased`}
+      className={`${inter.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full">
         <script

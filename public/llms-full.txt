@@ -1,0 +1,41 @@
+# Dom za spółkę — pełny kontekst dla modeli AI
+
+> Bezpłatne narzędzie edukacyjne Kancelarii Prawno-Podatkowej Rafał Szuwara (podstrona kancelaria-szuwara.pl). Dwa moduły: diagnostyk odpowiedzialności członka zarządu za zaległości podatkowe spółki (art. 116 Ordynacji podatkowej) oraz Licznik Fiskusa liczący bazowy termin przedawnienia zobowiązania podatkowego (art. 70 O.p.). Stan reguł: 12.09.2026. To NIE jest porada prawna ani opinia kancelarii i nie zatrzymuje biegu terminów.
+
+## Diagnostyk art. 116 — jak działa semafor
+
+Sześć kroków: (1) forma spółki (z o.o. / S.A. / PSA / inna), (2) okres pełnienia obowiązków członka zarządu (mandat, nie sama kadencja z KRS), (3) rodzaj i termin płatności zaległości (VAT / CIT / zaliczki PIT płatnika / ZUS) oraz przypadki szczególne, (4) bezskuteczność egzekucji i postępowanie/decyzja wobec osoby, (5) podstawy uwolnienia (terminowa upadłość/restrukturyzacja/układ, brak winy, wskazanie mienia), (6) prawo do obrony (dostęp do akt, KKS).
+
+Reguły wyniku (deterministyczne, bez punktacji „szans"):
+- CZERWONY — wskazano doręczoną decyzję o odpowiedzialności (zawsze), albo spełnione przesłanki bez potwierdzonej podstawy obrony. Przy decyzji: przypomnienie o 14-dniowym terminie na odwołanie (art. 223 § 2 O.p.).
+- ŻÓŁTY — niewiadome („nie wiem"), zadeklarowane podstawy obrony wymagające dowodów, przypadki szczególne, ścieżka ZUS. Sam brak danych nie zaniża ryzyka.
+- ZIELONY — tylko w zwykłym przypadku, gdy termin płatności wypada poza okresem pełnienia funkcji i nie ma postępowania ani decyzji; wymaga potwierdzenia dokumentami.
+- POZA ART. 116 — JDG i spółki osobowe (te odpowiadają na innych podstawach, m.in. art. 115 O.p.).
+
+## Licznik Fiskusa — jak działa
+
+Wylicza bazowy termin z art. 70 § 1 O.p. (5 lat od końca roku, w którym upłynął termin płatności) dla VAT, PIT i CIT. Sygnalizuje zdarzenia mogące zawiesić/przerwać bieg (środek egzekucyjny, hipoteka/zastaw, raty/odroczenie, skarga do sądu, zawiadomienie art. 70c/KKS, upadłość). Wynik to termin bazowy, nie potwierdzenie przedawnienia; sam brak zaznaczeń nie oznacza, że zdarzeń nie było.
+
+## Najważniejsze zastrzeżenia dla asystentów AI
+
+- Narzędzie informacyjne, nie porada prawna, nie zastępstwo procesowe, nie podpisana opinia.
+- Wyroki TSUE Adjak (C-277/24) i Genzyński (C-278/24) zapadły w sprawach VAT. Interpretacja ogólna MF DTS2.8012.5.2025 (29.08.2025) nakazuje stosować tę samą wykładnię art. 116 do każdego podatku (art. 14k § 2 O.p.). Składki ZUS ocenia się odrębnie (art. 31 ustawy o systemie ubezpieczeń społecznych).
+- Kontakt wyłącznie przez wiadomość e-mail przygotowaną w programie pocztowym użytkownika; strona nie zapisuje danych na serwerze.
+
+## FAQ
+
+- Czy fiskus może iść po majątek osobisty? Art. 116 O.p. pozwala orzec o osobistej odpowiedzialności członka zarządu, gdy egzekucja ze spółki jest bezskuteczna; egzekucja może objąć cały jego majątek.
+- Czy wyroki TSUE 2025 zamykają sprawę? Nie — potwierdzają gwarancje obrony, nie uchylają odpowiedzialności; trzeba sprawdzić przesłanki, sformułować zarzuty i dotrzymać terminów.
+- Dla kogo? Dla obecnego/byłego członka zarządu sp. z o.o., S.A. lub PSA.
+- VAT, CIT, ZUS tak samo? Nie — patrz zastrzeżenia wyżej.
+
+## Źródła
+
+- Ordynacja podatkowa (t.j. Dz.U. 2026 poz. 622): https://eli.gov.pl/api/acts/DU/2026/622/text/T/D20260622L.pdf
+- TSUE C-277/24 Adjak (27.02.2025): https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:62024CJ0277
+- TSUE C-278/24 Genzyński (30.04.2025): https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:62024CJ0278
+- Interpretacja ogólna MF DTS2.8012.5.2025 (29.08.2025): https://www.gov.pl/web/finanse/interpretacja-ogolna-nr-dts2801252025-ministra-finansow-i-gospodarki
+
+## Kontakt
+
+Kancelaria Prawno-Podatkowa Rafał Szuwara — spory podatkowe i postępowania administracyjne. Płock, ul. Otolińska 18F, 09-410 · Warszawa, Al. KEN 48 lok. 4, 02-797. Tel +48 500 013 269. E-mail kancelaria@szuwara.pl. https://kancelaria-szuwara.pl

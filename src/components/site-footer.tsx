@@ -12,6 +12,8 @@ export function SiteFooter() {
             alt={FIRM.name}
             width={15209}
             height={2781}
+            sizes="225px"
+            loading="lazy"
           />
           <p>{FIRM.name}</p>
           <p>{FIRM.city}</p>

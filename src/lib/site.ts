@@ -18,10 +18,10 @@ export function absoluteUrl(path = "/"): string {
 }
 
 export const OG_IMAGE = {
-  url: "/brand/gabinet.webp",
-  width: 1672,
-  height: 941,
-  alt: "Kancelaria Szuwara — diagnostyk art. 116 „Dom za spółkę”",
+  url: "/brand/og.png",
+  width: 1200,
+  height: 630,
+  alt: "Dom za spółkę — diagnostyk art. 116, Kancelaria Szuwara",
 } as const;
 
 /**

@@ -1009,6 +1009,8 @@ input { scroll-margin-top: 135px; }
   .pdf-letterhead { background: #f3efe6; padding: 4mm 5mm 5mm; border-bottom: 2px solid #b08d57; }
   .pdf-document h1 { border-left: 3px solid #b08d57; padding-left: 6mm; }
   .pdf-verdict { background: #1e3a2f; color: #fffdf7; border-left: 4px solid #b08d57; padding: 6mm 7mm; box-shadow: 2mm 2mm 0 #e9dfcd; }
+  .pdf-verdict[data-tone="red"] { background: #5c1a22; }
+  .pdf-verdict[data-tone="yellow"] { background: #5a4620; }
   .pdf-verdict h2, .pdf-verdict > p:last-child { color: #fffdf7; }
   .pdf-kicker { color: #e1c58e; }
   .pdf-kicker i { outline: 1px solid #e1c58e; outline-offset: 1mm; margin-right: 1mm; }

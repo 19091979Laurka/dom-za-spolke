@@ -36,6 +36,7 @@ export type LicznikResult = {
   expired: boolean;
   suspensions: string[];
   instrumentalRisk: boolean;
+  kksDate: string;
   legalBasis: { cite: string; note: string; url?: string }[];
   nextSteps: string[];
 };
@@ -212,6 +213,7 @@ export function diagnoseLimitation(
     expired,
     suspensions,
     instrumentalRisk,
+    kksDate: input.kks70c ? input.kksDate : "",
     legalBasis: [
       {
         cite: "art. 70 § 1 O.p.",
@@ -240,6 +242,7 @@ export function licznikPlainText(result: LicznikResult): string {
     `Termin płatności: ${formatIsoLocal(result.paymentDue)}`,
     `Bazowy koniec: ${formatIsoLocal(result.baseEnd)}`,
     `Dni: ${result.daysLeft}`,
+    result.kksDate ? `Data wszczęcia KKS: ${result.kksDate}` : "",
     result.instrumentalRisk ? "Flaga: ryzyko instrumentalnego KKS" : "",
     "",
     "Zdarzenia:", ...result.suspensions,

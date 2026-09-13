@@ -8,15 +8,6 @@ const nextConfig: NextConfig = {
     "*.cursor.sh",
     "*.vercel.app",
   ],
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "www.ksiegowoscplock.pl",
-        pathname: "/images/**",
-      },
-    ],
-  },
 };
 
 export default nextConfig;

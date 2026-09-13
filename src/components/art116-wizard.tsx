@@ -23,7 +23,7 @@ import {
 
 const STEPS = [
   "Spółka",
-  "Kadencja",
+  "Funkcja",
   "Zaległość",
   "Egzekucja",
   "Upadłość",
@@ -92,7 +92,7 @@ export function Art116Wizard() {
       <div ref={region} tabIndex={-1} id="wynik-do-druku" className="report-page space-y-6" aria-label="Raport diagnostyczny">
         <PrintReport kind="ODPOWIEDZIALNOŚĆ ZARZĄDU" date={result.assessmentDate} title={result.title} summary={result.summary} signal={result.signal}
           steps={result.nextSteps} sources={result.legalBasis} answers={result.answerSummary}
-          note={result.zusPath ? "ZUS wymaga odrębnej oceny. Nie stosujemy automatycznie zegara podatkowego ani wyroków dotyczących VAT." : result.adjakStrength === "analogy" ? "Wyroki TSUE dotyczą VAT. Przy CIT i należnościach płatnika argumentację należy odnieść do krajowych przepisów i konkretnej sprawy." : undefined}
+          note={result.zusPath ? "ZUS wymaga odrębnej oceny. Nie stosujemy automatycznie zegara podatkowego ani wyroków dotyczących VAT." : result.adjakStrength === "analogy" ? "Sentencje TSUE zapadły w sprawach VAT. Interpretacja ogólna MF (29.08.2025) nakazuje stosować tę samą wykładnię art. 116 do CIT i należności płatnika (art. 14k § 2 O.p.); zakres odnieś do swojej sprawy." : undefined}
           groups={result.signal === "out" ? [] : [{title:"Przesłanki odpowiedzialności",items:result.premises.map(x=>({title:x.label,body:x.detail,meta:statusLabel(x.status)}))},{title:"Kierunki obrony do sprawdzenia",items:result.defenses.map(x=>({title:x.title,body:x.body,meta:x.strength === "strong" ? "potwierdź dokumentami" : x.strength === "medium" ? "do weryfikacji" : "kontekst"}))}]} />
         <div className="report-heading"><p className="brand-eyebrow-plain">Kancelaria Szuwara · Raport diagnostyczny</p><p>Data: {result.assessmentDate} · reguły 12.09.2026</p></div>
         <Semafor signal={result.signal} title={result.title} summary={result.summary} />
@@ -103,7 +103,7 @@ export function Art116Wizard() {
           </p>
         ) : result.adjakStrength === "analogy" ? (
           <p className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-            Wyroki TSUE dotyczą VAT. Przy CIT i należnościach płatnika znaczenie mają krajowe przepisy oraz interpretacja ogólna MF; zakres argumentacji trzeba odnieść do danej sprawy.
+            Sentencje TSUE zapadły w sprawach VAT. Interpretacja ogólna MF (29.08.2025) nakazuje organom stosować tę samą wykładnię art. 116 do CIT i należności płatnika (art. 14k § 2 O.p.). Zakres argumentacji odnieś do swojej sprawy.
           </p>
         ) : null}
 
@@ -218,9 +218,9 @@ export function Art116Wizard() {
         <Step title="Kiedy naprawdę pełniłeś funkcję?">
           <p className="text-sm text-muted-foreground">
             Liczy się rzeczywistość, nie sam odpis KRS. Art. 116 § 2 wiąże odpowiedzialność z
-            terminem płatności w czasie kadencji.
+            terminem płatności przypadającym w czasie pełnienia obowiązków (mandatu).
           </p>
-          <Field label="Początek kadencji" htmlFor="tenure-start">
+          <Field label="Początek pełnienia funkcji" htmlFor="tenure-start">
             <Input
               id="tenure-start"
               className="h-11"
@@ -240,7 +240,7 @@ export function Art116Wizard() {
             onClick={() => patch({ stillServing: false })}
           />
           {!answers.stillServing ? (
-            <Field label="Koniec kadencji (rezygnacja, odwołanie)" htmlFor="tenure-end">
+            <Field label="Koniec pełnienia funkcji (rezygnacja, odwołanie, wygaśnięcie mandatu)" htmlFor="tenure-end">
               <Input
                 id="tenure-end"
                 className="h-11"
@@ -269,12 +269,12 @@ export function Art116Wizard() {
           <ChoiceCard
             selected={answers.arrearKind === "cit"}
             title="CIT"
-            hint="Analogia z interpretacji MF, nie twarda sentencja TSUE."
+            hint="Wyroki TSUE dotyczą VAT; interpretację ogólną MF stosuje się do każdego podatku."
             onClick={() => patch({ arrearKind: "cit" })}
           />
           <ChoiceCard
             selected={answers.arrearKind === "pit4"}
-            title="PIT-4 / zaliczki za pracowników"
+            title="Zaliczki PIT za pracowników (płatnik)"
             onClick={() => patch({ arrearKind: "pit4" })}
           />
           <ChoiceCard
@@ -299,7 +299,7 @@ export function Art116Wizard() {
       {step === 3 ? (
         <Step title="Czy urząd już idzie po spółkę — i po Ciebie?">
           <YesNo
-            label="Czy egzekucja ze spółki jest bezskuteczna albo komornik wrócił z kwitkiem?"
+            label="Czy egzekucja z majątku spółki (urząd skarbowy lub komornik) okazała się bezskuteczna?"
             value={answers.enforcementFruitless}
             onChange={(value) => patch({ enforcementFruitless: value })}
           />

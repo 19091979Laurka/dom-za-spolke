@@ -22,6 +22,7 @@ export function SiteHeader({
             alt={FIRM.name}
             width={15209}
             height={2781}
+            sizes="(min-width: 960px) 218px, 42vw"
             priority
           />
         </Link>

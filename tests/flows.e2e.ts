@@ -10,7 +10,7 @@ async function complete(p:Page,kind='VAT',options:{outside?:boolean;unknown?:boo
  await yn(p,0,'Tak');await yn(p,1,'Nie');if(kind!=='Składki ZUS')await yn(p,2,'Tak');
  await p.getByRole('button',{name:'Pokaż semafor'}).click();await expect(p.locator('.report-signal')).toBeVisible();
 }
-for(const [kind,signal] of [['VAT','red'],['CIT','red'],['PIT-4','red'],['Składki ZUS','yellow']])test(`full ${kind} flow`,async({page})=>{await complete(page,kind);await expect(page.locator('.report-signal')).toHaveAttribute('data-signal',signal);await expect(page.getByRole('button',{name:'Pobierz TXT'})).toBeVisible();});
+for(const [kind,signal] of [['VAT','red'],['CIT','red'],['Zaliczki PIT','red'],['Składki ZUS','yellow']])test(`full ${kind} flow`,async({page})=>{await complete(page,kind);await expect(page.locator('.report-signal')).toHaveAttribute('data-signal',signal);await expect(page.getByRole('button',{name:'Pobierz TXT'})).toBeVisible();});
 test('uncertainty and declared defense are yellow',async({page})=>{await complete(page,'VAT',{unknown:true});await expect(page.locator('.report-signal')).toHaveAttribute('data-signal','yellow');await complete(page,'VAT',{defense:true});await expect(page.locator('.report-signal')).toHaveAttribute('data-signal','yellow');});
 test('outside dates green, existing decision red, special yellow',async({page})=>{for(const [opt,signal] of [[{outside:true},'green'],[{outside:true,decision:true},'red'],[{outside:true,special:true},'yellow']] as const){await complete(page,'VAT',opt);await expect(page.locator('.report-signal')).toHaveAttribute('data-signal',signal);}});
 test('validation, back state, out-of-scope and reset',async({page})=>{

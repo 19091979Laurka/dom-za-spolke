@@ -26,6 +26,10 @@
 - TSUE 30.04.2025, C-278/24 Genzyński: https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:62024CJ0278
 - Interpretacja ogólna MF DTS2.8012.5.2025 (29.08.2025): https://www.gov.pl/web/finanse/interpretacja-ogolna-nr-dts2801252025-ministra-finansow-i-gospodarki
 
+## Pełny kontekst
+
+- Rozszerzona wersja dla modeli (reguły semafora, logika licznika, FAQ, źródła): /llms-full.txt
+
 ## Stan prawny
 
 - Reguły diagnostyczne: 12.09.2026. Ordynacja podatkowa: t.j. Dz.U. 2026 poz. 622. Kolejne zmiany od 1.10.2026 (Dz.U. 2026 poz. 846) — do weryfikacji, czy dotyczą art. 70/116/118/223.

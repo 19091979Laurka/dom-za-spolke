@@ -235,7 +235,7 @@ export function LicznikForm() {
           <PrintReport compact kind="TERMIN PRZEDAWNIENIA" date={formatPl(new Date())} title={result.title} summary={result.summary} signal={result.signal}
             steps={result.nextSteps} sources={result.legalBasis}
             stats={[{label:"Termin płatności",value:formatPl(result.paymentDue)},{label:"Bazowy koniec 5 lat",value:formatPl(result.baseEnd)}]}
-            answers={[{label:"Okres podatkowy",value:result.periodLabel},{label:"Termin płatności",value:formatPl(result.paymentDue)},{label:"Zaznaczone zdarzenia",value:result.suspensions.length ? result.suspensions.join("; ") : "Nie zaznaczono"}]}
+            answers={[{label:"Okres podatkowy",value:result.periodLabel},{label:"Termin płatności",value:formatPl(result.paymentDue)},...(result.kksDate ? [{label:"Data wszczęcia KKS",value:result.kksDate}] : []),{label:"Zaznaczone zdarzenia",value:result.suspensions.length ? result.suspensions.join("; ") : "Nie zaznaczono"}]}
             note={result.instrumentalRisk ? "KKS w ostatnich 90 dniach przed terminem bazowym: sprawdź akta. To umowny próg diagnostyczny, nie dowód instrumentalności ani automatyczny brak zawieszenia." : undefined}
             groups={[{title:"Zdarzenia wpływające na termin",items:result.suspensions.length ? result.suspensions.map((body,i)=>({title:`Zdarzenie ${i+1}`,body})) : [{title:"Brak zaznaczonych zdarzeń",body:"Pokazujemy datę bazową. Brak zaznaczeń nie dowodzi braku zdarzeń; katalog w formularzu nie jest pełny."}]}]} />
           <Semafor signal={result.signal} title={result.title} summary={result.summary} />
